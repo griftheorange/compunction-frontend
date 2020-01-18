@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import Tile from './Tile' 
-import Dice from 'Dice'
+import Dice from './Dice'
 
 
 
