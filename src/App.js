@@ -3,6 +3,8 @@ import './App.css';
 
 import Login from './components/Login'
 import Menu from './components/Menu'
+import userAdapter from './adaptors/userFetch'
+import Topbar from './components/Topbar'
 
 class App extends Component {
 
@@ -62,9 +64,9 @@ class App extends Component {
     }
   }
 
-  // componentDidMount(){
-  //   this.setDefaultState()
-  // }
+  componentDidMount(){
+    this.setDefaultState()
+  }
 
   render(){
     return (
