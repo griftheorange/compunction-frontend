@@ -84,6 +84,7 @@ export default class Game extends Component {
     
     render(){
         
+        console.log(this.props.players)
         return (
             <div>   
                 <Board  roll={this.state.currentRoll} handleRoll={this.handleRoll}  sprites={this.state.sprites}/>

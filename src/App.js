@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
 
 import Login from './components/Login'
@@ -8,32 +7,69 @@ import Menu from './components/Menu'
 class App extends Component {
 
   state = {
-    loggedIn: null
+    loggedIn: null,
+    attemptingLogin: false
   }
 
-  setLoggedIn = (user) => {
-    if(user["error"]){
-      alert(user["error"])
-    } else this.setState({
-      loggedIn: user
+  setDefaultState = () => {
+    userAdapter.getUsers()
+    .then((users) => {
+      let found = users.find((user) => {
+        return user.username == "griffin"
+      })
+      this.setState({
+        loggedIn: found
+      })
     })
   }
 
-  loggedInDeterminer = () => {
-    if(this.state.loggedIn){
-      
+  setLoggedIn = (user) => {
+    if(user){
+      if(user["error"]){
+        alert(user["error"])
+      } else {
+        this.setState({
+          loggedIn: user,
+          attemptingLogin: false
+        })
+      }
     } else {
-      return <Login setLoggedIn={this.setLoggedIn}/>
+      this.setState({
+        loggedIn: null,
+        attemptingLogin: false
+      })
     }
+  }
+
+  setAttemptingLogin = (bool) => {
+    this.setState({
+      attemptingLogin: bool
+    })
+  }
+
+  menuOrLogin = () => {
+    if(this.state.attemptingLogin){
+      return <Login setLoggedIn={this.setLoggedIn}/>
+    } else {
+      return (
+        <>
+        <Topbar setAttemptingLogin={this.setAttemptingLogin}
+                loggedIn={this.state.loggedIn}
+                setLoggedIn={this.setLoggedIn}/>
+        <Menu user={this.state.loggedIn}/>
+        </>
+      )
+    }
+  }
+
+  componentDidMount(){
+    this.setDefaultState()
   }
 
   render(){
     return (
-      // this.loggedInDeterminer()
       <div>
-      <Login setLoggedIn={this.setLoggedIn}/>
-      {/* Login/SignIn */}
-        <Menu/>
+        {this.menuOrLogin()}
       </div>
     );
   }
