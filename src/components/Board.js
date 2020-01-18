@@ -5,9 +5,14 @@ import Dice from './Dice'
 
 
 export default class Board extends Component {
+
+    
+
+
     render() {
+
         return (
-            <div id="yeet">
+            <div id="board">
                 <Tile />
                 <Dice />
             </div>

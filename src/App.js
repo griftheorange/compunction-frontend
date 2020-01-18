@@ -3,8 +3,6 @@ import './App.css';
 
 import Login from './components/Login'
 import Menu from './components/Menu'
-import Topbar from './components/Topbar'
-import userAdapter from './adaptors/userFetch'
 
 class App extends Component {
 
