@@ -64,9 +64,9 @@ class App extends Component {
     }
   }
 
-  componentDidMount(){
-    this.setDefaultState()
-  }
+  // componentDidMount(){
+  //   this.setDefaultState()
+  // }
 
   render(){
     return (

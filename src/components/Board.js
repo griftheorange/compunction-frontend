@@ -7,7 +7,7 @@ import Dice from './Dice'
 export default class Board extends Component {
     render() {
         return (
-            <div>
+            <div id="yeet">
                 <Tile />
                 <Dice />
             </div>
