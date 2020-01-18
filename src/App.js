@@ -12,14 +12,24 @@ class App extends Component {
   }
 
   setLoggedIn = (user) => {
-    this.setState({
+    if(user["error"]){
+      alert(user["error"])
+    } else this.setState({
       loggedIn: user
-    }, ()=>{console.log(this.state)})
+    })
+  }
+
+  loggedInDeterminer = () => {
+    if(this.state.loggedIn){
+      
+    } else {
+      return <Login setLoggedIn={this.setLoggedIn}/>
+    }
   }
 
   render(){
     return (
-      <Login setLoggedIn={this.setLoggedIn}/>
+      this.loggedInDeterminer()
     );
   }
 }
