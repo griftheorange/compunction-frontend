@@ -3,7 +3,7 @@ import logo from './logo.svg';
 import './App.css';
 
 import Login from './components/Login'
-import Mendu from './components/Menu'
+import Menu from './components/Menu'
 
 class App extends Component {
 

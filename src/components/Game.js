@@ -2,13 +2,16 @@ import React, { Component } from 'react'
 import Board from './Board'
 import Pieces from './Pieces'
 import Players from './Players'
+import Tile from './Tile'
 
 export default class Game extends Component {
 
     state = {
+        currentRoll:0,
         players : [],
-        // pieces : [],
-        // board :null
+        sprites : {
+            sprite: [1,2,3,4]
+        },
         whiteTiles : [],
         homeBases:[],
         
@@ -17,7 +20,11 @@ export default class Game extends Component {
         }
     }
 
-
+    handleRoll = (dice) =>{
+        this.setState({
+            currentRoll : dice 
+        })
+    }
 
     initializePlayerTiles  = () => {
 
@@ -36,7 +43,7 @@ export default class Game extends Component {
         //Pass the player to  a house
         //Pass Dice from Borad.state as a random number 
         //depending on dice if dice = 6 put it on the first white tile. 
-        // && 
+        // && sprites
     }
 
 
@@ -76,9 +83,11 @@ export default class Game extends Component {
 
     
     render(){
+        
         return (
             <div>   
-                <Board/>
+                <Board  roll={this.state.currentRoll} handleRoll={this.handleRoll}  sprites={this.state.sprites}/>
+            
                 <Players/>          
             </div>
         )
