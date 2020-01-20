@@ -6,28 +6,69 @@ import Tile from './Tile'
 
 export default class Game extends Component {
 
-    state = {
-        currentRoll:0,
-        players : [],
-        sprites : {
-            sprite: [1,2,3,4]
-        },
-        whiteTiles : [],
-        homeBases:[],
-        
-        finishLine: {
-            color : []
+    constructor(props){
+        super(props)
+
+        let hb = this.genHomeBases(props.players)
+
+        this.state = {
+            currentRoll:null,
+            playerTurn: null,
+            players: props.players,
+            activePieces: [],
+            whiteTiles: this.genTiles(52),
+            homeBases: hb,
+            finishLine: {
+                red: this.genTiles(5),
+                green: this.genTiles(5),
+                yellow: this.genTiles(5),
+                blue: this.genTiles(5)
+            },
+            endBox: {
+                red: [],
+                green: [],
+                yellow: [],
+                blue: []
+            }
         }
     }
+    
+    genHomeBases = (players) => {
+        let hb = {
+            red: this.genTiles(4),
+            green: this.genTiles(4),
+            yellow: this.genTiles(4),
+            blue: this.genTiles(4)
+        }
+        for(let i = 0; i < players.length; i++){
+            for(let j = 0; j < 4; j++){
+                hb[players[i]["color"]][j]["occupied"] = {
+                    x:0,
+                    y:0,
+                    color: players[i]["color"]
+                }
+            }
+        }
+        return hb
+    }
+
+    genTiles = (num) => {
+        let arr = []
+        for(let i = 0; i < num; i++){
+            arr.push({
+                x: 0,
+                y: 0,
+                occupied: null
+            })
+        }
+        return arr
+    }
+    
 
     handleRoll = (dice) =>{
         this.setState({
             currentRoll : dice 
         })
-    }
-
-    initializePlayerTiles  = () => {
-
     }
 
     componentDidMount(){
@@ -83,8 +124,7 @@ export default class Game extends Component {
 
     
     render(){
-        
-        console.log(this.props.players)
+        console.log(this.state)
         return (
             <div>   
                 <Board  roll={this.state.currentRoll} handleRoll={this.handleRoll}  sprites={this.state.sprites}/>
