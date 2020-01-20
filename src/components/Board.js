@@ -15,12 +15,7 @@ export default class Board extends Component {
     
 
     state= {
-         data : '', 
-        //  size : 900,
-        //  edge : 60,
-        //  colors : ["red", "green", "blue", "yellow"],
-        //  test1 : [0, 0, 0, 0, 0],
-        //  borderColor : "black"
+         data : ''
     }
 
 
@@ -116,6 +111,55 @@ export default class Board extends Component {
             .style("fill", "white")
             .attr("stroke", borderColor)
             .attr("stroke-width", "5px")
+
+        for(let i = 0; i < 4; i++){
+            let hb = this.props.homeBases
+            let xs = null
+            if(i%2 == 0){
+                xs =  0
+            } else {
+                xs = 9*edge
+            }
+            let ys = null
+            if(i <= 1){
+                ys = 0
+            } else {
+                ys = 9*edge
+            }
+            let color = null
+            if(i%2 == 0 && i <= 1){
+                color = "red"
+            } else if(i%2 == 0 && i > 1){
+                color = "blue"
+            } else if(i%2 != 0 && i <= 1){
+                color = "green"
+            } else {
+                color = "yellow"
+            }
+            for(let j = 0; j < 4; j++){
+                svg.append("circle")
+                    .attr("r", edge/1.8)
+                    .attr("cx", function(){
+                        if(j%2 == 0){
+                            hb[color][j].x = xs+edge*2
+                            return xs+edge*2
+                        } else {
+                            hb[color][j].x = xs+edge*4
+                            return xs+edge*4
+                        }
+                    })
+                    .attr("cy", function(){
+                        if(j <= 1){
+                            hb[color][j].y = ys+edge*2
+                            return ys+edge*2
+                        } else {
+                            hb[color][j].y = ys+edge*4
+                            return ys+edge*4
+                        }
+                    })
+                    .attr("style", "color: light-gray; opacity: 0.25;")
+            }
+        }
 
         
 
