@@ -27,15 +27,11 @@ export default class Board extends Component {
         }
         return splitArr
     }
-    
-
 
     componentDidMount(){
-        // this.draw()
         this.setState({
             data : this.draw()
         })
-        
     }
 
 
@@ -511,23 +507,29 @@ export default class Board extends Component {
                 .attr("stroke-width", "1px")
         })
 
+        this.props.pieces.forEach((piece) => {
+            svg.append("circle")
+                .attr("cx", function(){
+                    return piece.array[piece.index].x
+                })
+                .attr("cy", function(){
+                    return piece.array[piece.index].y
+                })
+                .attr("r", edge/2.2)
+                .attr("style", function(){
+                    return `fill: ${piece.color};stroke: black; stroke-weight: 10px`
+                })
+                .on("click", ()=>{this.props.handlePieceToMove(piece)})
+        })
+
         return node
-
-            // console.log(first)
-            // console.log(second)
-            // console.log(third)
-
     }
-    
-    
-
 
     render() {  
-        console.log(this.props.finishLine)
         return (
             <div id="board">
                 <Tile />
-                <RD3Component  data={this.state.data}/>
+                <RD3Component  data={this.draw()}/>
                 <Dice />
             </div>
         )

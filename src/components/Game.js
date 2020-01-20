@@ -3,6 +3,7 @@ import Board from './Board'
 import Pieces from './Pieces'
 import Players from './Players'
 import Tile from './Tile'
+import { Animate } from 'react-move'
 
 export default class Game extends Component {
 
@@ -10,12 +11,15 @@ export default class Game extends Component {
         super(props)
 
         let hb = this.genHomeBases(props.players)
+        let pieces = this.genPieces(hb)
 
         this.state = {
             currentRoll:null,
             playerTurn: null,
+
             players: props.players,
             activePieces: [],
+            pieces: pieces,
             whiteTiles: this.genTiles(52),
             homeBases: hb,
             finishLine: {
@@ -29,8 +33,40 @@ export default class Game extends Component {
                 green: [],
                 yellow: [],
                 blue: []
-            }
+            },
+            turnCount: 0
         }
+    }
+
+    handlePieceToMove = (clickedPiece) => {
+        let newPieces = [...this.state.pieces]
+        let newWhiteTiles = [...this.state.whiteTiles]
+        let newHomeBases = {...this.state.homeBases}
+
+        let found = newPieces.find((piece) => {
+            return piece.array == clickedPiece.array && piece.index == clickedPiece.index
+        })
+        found.array = this.state.whiteTiles
+        found.index = 0
+        this.setState({
+            pieces: newPieces
+        })
+    }
+
+    genPieces = (hb) => {
+        let pieces = []
+        this.props.players.forEach(player => {
+            for(let i = 0; i < 4; i++){
+                let piece = {
+                    array: hb[player.color],
+                    index: i,
+                    color: player.color
+                }
+                hb[player.color][i].occupied = piece
+                pieces.push(piece)
+            }
+        })
+        return pieces
     }
     
     genHomeBases = (players) => {
@@ -39,15 +75,6 @@ export default class Game extends Component {
             green: this.genTiles(4),
             yellow: this.genTiles(4),
             blue: this.genTiles(4)
-        }
-        for(let i = 0; i < players.length; i++){
-            for(let j = 0; j < 4; j++){
-                hb[players[i]["color"]][j]["occupied"] = {
-                    x:0,
-                    y:0,
-                    color: players[i]["color"]
-                }
-            }
         }
         return hb
     }
@@ -72,7 +99,6 @@ export default class Game extends Component {
     }
 
     componentDidMount(){
-        setTimeout(()=>{console.log(this.state)}, 3000)
     }
 
     checkGameOptions = () => {
@@ -124,17 +150,25 @@ export default class Game extends Component {
 
     
     render(){
-        console.log(this.state)
         return (
             <div>   
                 <Board  roll={this.state.currentRoll} 
                         handleRoll={this.handleRoll}  
                         sprites={this.state.sprites}
                         whiteTiles={this.state.whiteTiles}
+                        pieces={this.state.pieces}
                         homeBases={this.state.homeBases}
                         finishLine={this.state.finishLine}
-                        endBox={this.state.endBox}/>
-            
+                        endBox={this.state.endBox}
+                        handlePieceToMove={this.handlePieceToMove}/>
+                {/* <Animate
+                    show={true}
+                    start={{
+                        x: ,
+                        y: 
+                    }}>
+                    
+                </Animate> */}
                 <Players/>          
             </div>
         )

@@ -45,8 +45,6 @@ export default class Tile extends Component {
 
 
     render() {
-        console.log(this.state.whiteTiles)
-        console.log(this.props.roll)
         return (
             <div>
                {this.setFirstSpriteOnFirstTile()}
