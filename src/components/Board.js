@@ -167,6 +167,7 @@ export default class Board extends Component {
             .attr("points", function(d, i){
                 switch(i){
                     case 0:
+
                         return `${6*edge},${9*edge} ${6*edge},${6*edge} ${size/2-10},${size/2}`
                         break;
                     case 1:
@@ -187,6 +188,12 @@ export default class Board extends Component {
         let xs = 1*edge
         let ys = 7*edge
 
+        let red = this.props.finishLine.red
+        let yellow = this.props.finishLine.yellow
+        let blue = this.props.finishLine.blue
+        let green= this.props.finishLine.green
+
+
         svg.selectAll(".tiles")
             .data(test1)
             .enter()
@@ -194,9 +201,11 @@ export default class Board extends Component {
                 .attr("width", `${edge}`)
                 .attr("height", `${edge}`)
                 .attr("x", function(d, i){
+                    red[i].x = i*edge + xs
                     return i*edge + xs
                 })
                 .attr("y", function(d, i){
+                    red[i].y = ys
                     return ys
                 })
                 .attr("fill", "red")
@@ -215,9 +224,11 @@ export default class Board extends Component {
                 .attr("width", `${edge}`)
                 .attr("height", `${edge}`)
                 .attr("x", function(d, i){
+                    green[i].x = xs
                     return xs
                 })
                 .attr("y", function(d, i){
+                    green[i].y = i*edge + ys
                     return i*edge + ys
                 })
                 .attr("fill", "green")
@@ -234,9 +245,11 @@ export default class Board extends Component {
                 .attr("width", `${edge}`)
                 .attr("height", `${edge}`)
                 .attr("x", function(d, i){
+                    yellow[i].x = -i*edge + xs
                     return -i*edge + xs
                 })
                 .attr("y", function(d, i){
+                    yellow[i].y = ys
                     return ys
                 })
                 .attr("fill", "yellow")
@@ -253,9 +266,11 @@ export default class Board extends Component {
                 .attr("width", `${edge}`)
                 .attr("height", `${edge}`)
                 .attr("x", function(d, i){
+                    blue[i].x = xs
                     return xs
                 })
                 .attr("y", function(d, i){
+                    blue[i].y= -i*edge + ys
                     return -i*edge + ys
                 })
                 .attr("fill", "blue")
@@ -507,8 +522,8 @@ export default class Board extends Component {
     
 
 
-    render() {
-
+    render() {  
+        console.log(this.props.finishLine)
         return (
             <div id="board">
                 <Tile />
