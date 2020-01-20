@@ -20,8 +20,7 @@ export default class Board extends Component {
         //  edge : 60,
         //  colors : ["red", "green", "blue", "yellow"],
         //  test1 : [0, 0, 0, 0, 0],
-        //  borderColor : "black",
-         whiteTiles:[]
+        //  borderColor : "black"
     }
 
 
@@ -51,11 +50,6 @@ export default class Board extends Component {
         const colors = ["red", "green", "blue", "yellow"]
         const test1 = [0, 0, 0, 0, 0]
         const borderColor = "black"
-
-        let whiteTiles = []
-        for(let i = 0; i < 52; i++){
-            whiteTiles.push(i)
-        }
 
 
         let node = document.createElement('div')
@@ -122,6 +116,8 @@ export default class Board extends Component {
             .style("fill", "white")
             .attr("stroke", borderColor)
             .attr("stroke-width", "5px")
+
+        
 
         colorBlockGen.append("polygon")
             .attr("points", function(d, i){
@@ -223,7 +219,7 @@ export default class Board extends Component {
                 .attr("stroke-width", "1px")
 
 
-        let split = this.splitTilesToBlocks(whiteTiles)
+        let split = this.splitTilesToBlocks(this.props.whiteTiles)
 
         // split[0]
         let midpoint = Math.ceil(split[0].length/2-1)
@@ -238,8 +234,14 @@ export default class Board extends Component {
 
         first.forEach((tile, i) => {
             svg.append("rect")
-                .attr("x", -i*edge + xs)
-                .attr("y", ys)
+                .attr("x", function(){
+                    first[i].x = -i*edge + xs
+                    return -i*edge + xs
+                })
+                .attr("y", function(){
+                    first[i].y = ys
+                    return ys
+                })
                 .attr("width", edge)
                 .attr("height", edge)
                 .attr("fill", "white")
@@ -248,8 +250,14 @@ export default class Board extends Component {
         })
 
         svg.append("rect")
-            .attr("x", -(midpoint-1)*edge + xs)
-            .attr("y", ys - edge)
+            .attr("x", function(){
+                second.x = -(midpoint-1)*edge + xs
+                return -(midpoint-1)*edge + xs
+            })
+            .attr("y", function(){
+                second.y = ys - edge
+                return ys - edge
+            })
             .attr("width", edge)
             .attr("height", edge)
             .attr("fill", "white")
@@ -258,8 +266,14 @@ export default class Board extends Component {
 
         third.forEach((tile, i) => {
             svg.append("rect")
-                .attr("x", -(midpoint-i)*edge + xs)
-                .attr("y", ys-2*edge)
+                .attr("x", function(){
+                    third[i].x = -(midpoint-1-i)*edge + xs
+                    return -(midpoint-i-1)*edge + xs
+                })
+                .attr("y", function(){
+                    third[i].y = ys-2*edge
+                    return ys-2*edge
+                })
                 .attr("width", edge)
                 .attr("height", edge)
                 .attr("fill", "white")
@@ -277,8 +291,14 @@ export default class Board extends Component {
 
         first.forEach((tile, i) => {
             svg.append("rect")
-                .attr("x", i*edge + xs)
-                .attr("y", ys)
+                .attr("x", function(){
+                    first[i].x = i*edge + xs
+                    return i*edge + xs
+                })
+                .attr("y", function(){
+                    first[i].y = ys
+                    return ys
+                })
                 .attr("width", edge)
                 .attr("height", edge)
                 .attr("fill", "white")
@@ -287,8 +307,14 @@ export default class Board extends Component {
         })
 
         svg.append("rect")
-            .attr("x", (midpoint-1)*edge + xs)
-            .attr("y", ys + edge)
+            .attr("x", function(){
+                second.x = (midpoint-1)*edge + xs
+                return (midpoint-1)*edge + xs
+            })
+            .attr("y", function(){
+                second.y = ys + edge
+                return ys + edge
+            })
             .attr("width", edge)
             .attr("height", edge)
             .attr("fill", "white")
@@ -297,8 +323,14 @@ export default class Board extends Component {
 
         third.forEach((tile, i) => {
             svg.append("rect")
-                .attr("x", (midpoint-i)*edge + xs)
-                .attr("y", ys+2*edge)
+                .attr("x", function(){
+                    third[i].x = (midpoint-1-i)*edge + xs
+                    return (midpoint-i-1)*edge + xs
+                })
+                .attr("y", function(){
+                    third[i].y = ys+2*edge
+                    return ys+2*edge
+                })
                 .attr("width", edge)
                 .attr("height", edge)
                 .attr("fill", "white")
@@ -316,8 +348,14 @@ export default class Board extends Component {
 
         first.forEach((tile, i) => {
             svg.append("rect")
-                .attr("x", xs)
-                .attr("y", -i*edge + ys)
+                .attr("x", function(){
+                    first[i].x = xs
+                    return xs
+                })
+                .attr("y", function(){
+                    first[i].y = -i*edge + ys
+                    return -i*edge + ys
+                })
                 .attr("width", edge)
                 .attr("height", edge)
                 .attr("fill", "white")
@@ -326,8 +364,14 @@ export default class Board extends Component {
         })
 
         svg.append("rect")
-            .attr("x", xs + edge)
-            .attr("y", -(midpoint-1)*edge + ys)
+            .attr("x", function(){
+                second.x = xs + edge
+                return xs + edge
+            })
+            .attr("y", function(){
+                second.y = -(midpoint-1)*edge + ys
+                return -(midpoint-1)*edge + ys
+            })
             .attr("width", edge)
             .attr("height", edge)
             .attr("fill", "white")
@@ -336,8 +380,14 @@ export default class Board extends Component {
 
         third.forEach((tile, i) => {
             svg.append("rect")
-                .attr("x", xs+2*edge)
-                .attr("y", -(midpoint-i)*edge + ys)
+                .attr("x", function(){
+                    third[i].x = xs+2*edge
+                    return xs+2*edge
+                })
+                .attr("y", function(){
+                    third[i].y = -(midpoint-i-1)*edge + ys
+                    return -(midpoint-i-1)*edge + ys
+                })
                 .attr("width", edge)
                 .attr("height", edge)
                 .attr("fill", "white")
@@ -355,8 +405,14 @@ export default class Board extends Component {
 
         first.forEach((tile, i) => {
             svg.append("rect")
-                .attr("x", xs)
-                .attr("y", i*edge + ys)
+                .attr("x", function(){
+                    first[i].x = xs
+                    return xs
+                })
+                .attr("y", function(){
+                    first[i].y = i*edge + ys
+                    return i*edge + ys
+                })
                 .attr("width", edge)
                 .attr("height", edge)
                 .attr("fill", "white")
@@ -365,8 +421,14 @@ export default class Board extends Component {
         })
 
         svg.append("rect")
-            .attr("x", xs - edge)
-            .attr("y", (midpoint-1)*edge + ys)
+            .attr("x", function(){
+                second.x = xs - edge
+                return xs - edge
+            })
+            .attr("y", function(){
+                second.y = (midpoint-1)*edge + ys
+                return (midpoint-1)*edge + ys
+            })
             .attr("width", edge)
             .attr("height", edge)
             .attr("fill", "white")
@@ -375,8 +437,14 @@ export default class Board extends Component {
 
         third.forEach((tile, i) => {
             svg.append("rect")
-                .attr("x", xs-2*edge)
-                .attr("y", (midpoint-i)*edge + ys)
+                .attr("x", function(){
+                    third[i].x = xs-2*edge
+                    return xs-2*edge
+                })
+                .attr("y", function(){
+                    third[i].y = (midpoint-i)*edge + ys
+                    return (midpoint-i)*edge + ys
+                })
                 .attr("width", edge)
                 .attr("height", edge)
                 .attr("fill", "white")

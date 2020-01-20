@@ -72,7 +72,7 @@ export default class Game extends Component {
     }
 
     componentDidMount(){
-        //fetch 
+        setTimeout(()=>{console.log(this.state)}, 3000)
     }
 
     checkGameOptions = () => {
@@ -127,7 +127,13 @@ export default class Game extends Component {
         console.log(this.state)
         return (
             <div>   
-                <Board  roll={this.state.currentRoll} handleRoll={this.handleRoll}  sprites={this.state.sprites}/>
+                <Board  roll={this.state.currentRoll} 
+                        handleRoll={this.handleRoll}  
+                        sprites={this.state.sprites}
+                        whiteTiles={this.state.whiteTiles}
+                        homeBases={this.state.homeBases}
+                        finishLine={this.state.finishLine}
+                        endBox={this.state.endBox}/>
             
                 <Players/>          
             </div>
